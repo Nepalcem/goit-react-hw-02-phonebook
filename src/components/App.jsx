@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { nanoid } from 'nanoid';
+import ContactsList from './contactsList/ContactsList';
 
 export default class App extends Component {
   state = {
@@ -6,17 +8,24 @@ export default class App extends Component {
     name: '',
   };
 
-  handleChange = e => {
-    const { name, value } = e.currentTarget;
-    this.setState({
-      [name]: value,
-    });
-  };
+  // handleChange = e => {
+  //   const { name, value } = e.currentTarget;
+  //   this.setState({
+  //     [name]: value,
+  //   });
+  // };
 
   submitHandler = e => {
     e.preventDefault();
-    console.log(this.state);
-  };
+    const userObj = {
+      id: nanoid(),
+      name: e.target.elements.name.value,
+    };
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts, userObj],
+    }));
+  }
+
 
   render() {
     return (
@@ -31,14 +40,14 @@ export default class App extends Component {
               pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
               required
-              onChange={this.handleChange}
+              // onChange={this.handleChange}
             />
           </label>
           <button type="submit">Add Contact</button>
         </form>
         <div className="contacts">
           <h2>Contacts List:</h2>
-          <ul className="contacts__list"></ul>
+          <ContactsList contacts={this.state.contacts}></ContactsList>
         </div>
       </div>
     );
