@@ -26,12 +26,26 @@ export default class App extends Component {
     }));
   };
 
+  changeFilter = e => {
+    this.setState({ filter: e.currentTarget.value });
+  };
+
+  getVisibleContacts = () => {
+    const { contacts, filter } = this.state;
+    const lowerCaseFilterValue = filter.toLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(lowerCaseFilterValue)
+    );
+  };
+
   render() {
+    const { filter } = this.state;
+
     return (
       <div>
         <Form onSubmit={this.addContact}></Form>
-        {/* <Filter value={this.filter}></Filter> */}
-        <ContactsList contacts={this.state.contacts}></ContactsList>
+        <Filter value={filter} onChange={this.changeFilter}></Filter>
+        <ContactsList contacts={this.getVisibleContacts()}></ContactsList>
       </div>
     );
   }
