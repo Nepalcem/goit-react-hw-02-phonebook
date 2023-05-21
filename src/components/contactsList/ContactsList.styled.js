@@ -44,7 +44,7 @@ export const ContactsStyled = styled.ul`
   }
 
   & button {
-    background-color: rgb(81, 203, 238);
+    background-color: #EE4B2B;
     color: white;
     padding: 0px 15px;
     border: none;
